@@ -15,21 +15,29 @@
 
   <body>
     <!-- search bar/button div -->
-    <div>
-      <ul class="menu">
-        <li><input type="search" placeholder="Search" id="searchBar"></li>
-        <li><button type="button" class="button" id="submitBtn">Search</button></li>
-      </ul>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">WEATHER TRACKER</li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li><input type="search" placeholder="Search" id="searchBar"></li>
+          <li><button type="button" class="button" id="submitBtn">Search</button></li>
+        </ul>
+      </div>
     </div>
-    <div id="search-history"></div>
-    <!-- placehold -->
-      <div class="card-divider">
-        This is a header
-      </div>
-      <div class="card-section">
-        <h4>This is a card.</h4>
-        <p>It has an easy to override visual style, and is appropriately subdued.</p>
-      </div>
+    <div class="grid-y grid-padding-y">
+      <div class="cell small-4" id="search-history"></div>
+    </div>
+    <div class="grid-x align-spaced" id="daily-forecast"></div>
+    <div class="grid-x align-spaced">
+      <div class="cell small-10 medium-1 large-1" id="firstday-forecast"></div>
+      <div class="cell small-10 medium-1 large-1" id="secondday-forecast"></div>
+      <div class="cell small-10 medium-1 large-1" id="thirdday-forecast"></div>
+      <div class="cell small-10 medium-1 large-1" id="fourthday-forecast"></div>
+      <div class="cell small-10 medium-1 large-1" id="fifthday-forecast"></div>
     </div>
 
     <!-- Scripts -->

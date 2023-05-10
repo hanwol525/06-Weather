@@ -1,8 +1,8 @@
 // TO DO:
-// way to display current conditions for a city
-// --the date (day.js for conversion)
+// current/daily forecase
+// --date (day.js for conversion)
 // --icon representation of weather conditions
-// 5-day forecast (limit) with:
+// 5-day forecast with:
 // --date
 // --icon representation of weather conditions
 
@@ -13,11 +13,6 @@
 var searchBar = document.getElementById("searchBar");
 var submitBtn = document.getElementById("submitBtn");
 var searchHistory = document.getElementById("search-history");
-
-// arrays for daily forecast
-var dailyTemparray = [];
-var dailyWindarray = [];
-var dailyHumarray = [];
 
 // arrays for averaging temperature in 5-day forecast
 var firstdayTemparray = [];
@@ -40,12 +35,13 @@ var thirddayHumarray = [];
 var fourthdayHumarray = [];
 var fifthdayHumarray = [];
 
-// arrays for displays
-var firstdayDisplay = [];
-var seconddayDisplay = [];
-var thirddayDisplay = [];
-var fourthdayDisplay = [];
-var fifthdayDisplay = [];
+// forecast section display variables
+var dailyForecast = document.getElementById("daily-forecast");
+var dayOne = document.getElementById("firstday-forecast");
+var dayTwo = document.getElementById("secondday-forecast");
+var dayThree = document.getElementById("thirdday-forecast");
+var dayFour = document.getElementById("fourthday-forecast");
+var dayFive = document.getElementById("fifthday-forecast");
 
 // sends last city to local storage
 submitBtn.addEventListener("click", function(){
@@ -56,8 +52,7 @@ submitBtn.addEventListener("click", function(){
     // append last city to a list under searchbar
     var lastcityLS = JSON.parse(localStorage.getItem('last-city'));
     var lastcityBtn = document.createElement("button");
-    lastcityBtn.textContent = lastcityLS;
-    // figure out way to do title/sentence case for city
+    lastcityBtn.textContent = lastcityLS.toUpperCase();
     lastcityBtn.style.display = "block";
     searchHistory.appendChild(lastcityBtn);
     lastcityBtn.addEventListener("click", function(){
@@ -65,10 +60,10 @@ submitBtn.addEventListener("click", function(){
     })
 });
 
-
 // geocodes based on city name
 function citynameFetch(cityName){
     var geocodereqURL = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&limit=1&appid=23116274a5a42433f230b2d7ad947f9a';
+    searchBar.value = '';
     fetch(geocodereqURL)
         .then((res) => {return res.json()
         // maybe set up 404 response if time
@@ -81,7 +76,7 @@ function citynameFetch(cityName){
     return;
 };
 
-// uses coordinates to retrieve city name for 5-day forecast
+// uses coordinates to retrieve city name/data for daily and 5-day forecasts
 function coordsFetch(lat, lon){
     // urls for api calls
     var fivedaycoordsFetchURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=23116274a5a42433f230b2d7ad947f9a&units=imperial';
@@ -95,10 +90,20 @@ function coordsFetch(lat, lon){
 
     .then((data) => {
         console.log(data)
+        dailyForecast.innerHTML = '';
 
-        dailyTemparray.push(data.main.temp);
-        dailyWindarray.push(data.wind.speed);
-        dailyHumarray.push(data.main.humidity);
+        var dailyArray = [];
+        dailyArray.push(data.main.temp, data.wind.speed, data.main.humidity);
+
+        var tempDisplay = document.createElement("p");
+        var windDisplay = document.createElement("p");
+        var humDisplay = document.createElement("p");
+        tempDisplay.textContent = "Temperature: " + String(dailyArray[0]) + "°F";
+        windDisplay.textContent = "Wind speed: " + String(dailyArray[1]) + "MPH";
+        humDisplay.textContent = "Humidity: " + String(dailyArray[2]) + "%";
+
+        dailyForecast.append(tempDisplay, windDisplay, humDisplay);
+
     });
 
     // call for 5-day forecast
@@ -109,7 +114,6 @@ function coordsFetch(lat, lon){
       
         .then((data) => {
             console.log(data);
-
             // loop to get 5-day temperature/wind speed/humidity averages
             for (var i = 0; i < data.list.length; i++){
                 if (i >= 0 && i <= 7){
@@ -135,24 +139,53 @@ function coordsFetch(lat, lon){
                 }
             }
 
+            dayOne.innerHTML = '';
+            dayTwo.innerHTML = '';
+            dayThree.innerHTML = '';
+            dayFour.innerHTML = '';
+            dayFive.innerHTML = '';
+
+            var firstdayDisplay = ["Day One: "];
+            var seconddayDisplay = ["Day Two: "];
+            var thirddayDisplay = ["Day Three: "];
+            var fourthdayDisplay = ["Day Four: "];
+            var fifthdayDisplay = ["Day Five: "];
+
             // pushing 5-day forecast info to display arrays
             firstdayDisplay.push(arrayAvg(firstdayTemparray), arrayAvg(firstdayWindarray), arrayAvg(firstdayHumarray));
             seconddayDisplay.push(arrayAvg(seconddayTemparray), arrayAvg(seconddayWindarray), arrayAvg(seconddayHumarray));
             thirddayDisplay.push(arrayAvg(thirddayTemparray), arrayAvg(thirddayWindarray), arrayAvg(thirddayHumarray));
             fourthdayDisplay.push(arrayAvg(fourthdayTemparray), arrayAvg(fourthdayWindarray), arrayAvg(thirddayHumarray));
             fifthdayDisplay.push(arrayAvg(fifthdayTemparray), arrayAvg(fifthdayWindarray), arrayAvg(fifthdayHumarray));
-
             // figure out how to do the weather condition icons
-        });
-        
-    
-    
 
+            arrayDisplay(firstdayDisplay, dayOne);
+            arrayDisplay(seconddayDisplay, dayTwo);
+            arrayDisplay(thirddayDisplay, dayThree);
+            arrayDisplay(fourthdayDisplay, dayFour);
+            arrayDisplay(fifthdayDisplay, dayFive);
+        });
     return;
 };
 
 // displays temperature/wind speed/humidity
-function displayTime(){
+function arrayDisplay(array, daySection){
+    var tempdisplayEl = document.createElement("p");
+    var winddisplayEl = document.createElement("p");
+    var humdisplayEl = document.createElement("p");
+    var sectionHead = document.createElement("h2");
+
+    sectionHead.textContent = String(array[0]);
+    sectionHead.className = "sectionHead";
+    tempdisplayEl.textContent = "Temperature: " + String(array[1]) + "°F";
+    tempdisplayEl.className = "displayText";
+    winddisplayEl.textContent = "Wind speed: " + String(array[2]) + "MPH";
+    winddisplayEl.className = "displayText";
+    humdisplayEl.textContent = "Humidity: " + String(array[3]) + "%";
+    humdisplayEl.className = "displayText";
+
+    daySection.append(sectionHead, tempdisplayEl, winddisplayEl, humdisplayEl);
+    return;
 }
 
 // averages array objects and returns an integer
