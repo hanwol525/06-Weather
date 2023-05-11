@@ -14,31 +14,38 @@
   </head>
 
   <body>
+    <div class="header"></div>
     <!-- search bar/button div -->
     <div class="top-bar">
       <div class="top-bar-left">
-        <ul class="dropdown menu" data-dropdown-menu>
-          <li class="menu-text">WEATHER TRACKER</li>
+        <ul class="dropdown menu" data-dropdown-menu id="header">
+          <li class="menu-text">CITY WEATHER FORECAST</li>
         </ul>
       </div>
       <div class="top-bar-right">
-        <ul class="menu">
+        <ul class="menu align-right" id="searchbarDiv">
           <li><input type="search" placeholder="Search" id="searchBar"></li>
           <li><button type="button" class="button" id="submitBtn">Search</button></li>
         </ul>
       </div>
     </div>
-    <div class="grid-y grid-padding-y">
-      <div class="cell small-4" id="search-history"></div>
+    <div class="grid-y grid-padding-y align-left" id="searchHistory">
+      <button class="button" type="button" id="toggleDropdown" data-toggle="example-dropdown">Search History:</button>
+      <div class="dropdown-pane" id="example-dropdown" data-dropdown data-auto-focus="true"></div>
     </div>
-    <div class="grid-x align-spaced" id="daily-forecast"></div>
-    <div class="grid-x align-spaced">
+    <div class="grid-x align-center-middle" id="introMsg"><p>Search for a city to see today's weather and a five-day forecast!</p></div>
+    <div class="grid-x align-spaced align-middle grid-padding-y" id="daily-forecast">
+      <img src="" id="dailyweatherIcon">
+    </div>
+    <div class="grid-x align-spaced" id="fivedayForecast">
       <div class="cell small-10 medium-1 large-1" id="firstday-forecast"></div>
       <div class="cell small-10 medium-1 large-1" id="secondday-forecast"></div>
       <div class="cell small-10 medium-1 large-1" id="thirdday-forecast"></div>
       <div class="cell small-10 medium-1 large-1" id="fourthday-forecast"></div>
       <div class="cell small-10 medium-1 large-1" id="fifthday-forecast"></div>
     </div>
+
+    <div class="footer"></div>
 
     <!-- Scripts -->
     <!-- jQuery script for foundation -->
