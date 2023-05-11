@@ -9,10 +9,13 @@
 // API KEY: 23116274a5a42433f230b2d7ad947f9a
 
 
-// element selection variables
+// intro message
+var introMsg = document.getElementById("introMsg");
+
+// search bar/history variables
 var searchBar = document.getElementById("searchBar");
 var submitBtn = document.getElementById("submitBtn");
-var searchHistory = document.getElementById("search-history");
+var searchHistory = document.getElementById("example-dropdown");
 
 // arrays for averaging temperature in 5-day forecast
 var firstdayTemparray = [];
@@ -37,6 +40,7 @@ var fifthdayHumarray = [];
 
 // forecast section display variables
 var dailyForecast = document.getElementById("daily-forecast");
+var fivedayForecast = document.getElementById("fivedayForecast");
 var dayOne = document.getElementById("firstday-forecast");
 var dayTwo = document.getElementById("secondday-forecast");
 var dayThree = document.getElementById("thirdday-forecast");
@@ -48,22 +52,32 @@ submitBtn.addEventListener("click", function(){
     var searchVal = searchBar.value;
     citynameFetch(searchVal);
     localStorage.setItem('last-city', JSON.stringify(searchVal));
-
-    // append last city to a list under searchbar
+    // appends last city to a dropdown menu
     var lastcityLS = JSON.parse(localStorage.getItem('last-city'));
     var lastcityBtn = document.createElement("button");
     lastcityBtn.textContent = lastcityLS.toUpperCase();
-    lastcityBtn.style.display = "block";
+    lastcityBtn.className = "searchhistoryBtn"
     searchHistory.appendChild(lastcityBtn);
+    console.log(searchHistory.childNodes[1].innerHTML);
+    // triggers weather fetches
     lastcityBtn.addEventListener("click", function(){
         citynameFetch(lastcityLS);
     })
 });
 
+function clearDays(){
+    dayOne.innerHTML = '';
+    dayTwo.innerHTML = '';
+    dayThree.innerHTML = '';
+    dayFour.innerHTML = '';
+    dayFive.innerHTML = '';
+}
+
 // geocodes based on city name
 function citynameFetch(cityName){
     var geocodereqURL = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&limit=1&appid=23116274a5a42433f230b2d7ad947f9a';
     searchBar.value = '';
+    introMsg.style.display = "none";
     fetch(geocodereqURL)
         .then((res) => {return res.json()
         // maybe set up 404 response if time
@@ -93,16 +107,23 @@ function coordsFetch(lat, lon){
         dailyForecast.innerHTML = '';
 
         var dailyArray = [];
+        var todaysDate = dayjs().format('MM/DD');
         dailyArray.push(data.main.temp, data.wind.speed, data.main.humidity);
 
+        var dateDisplay = document.createElement("p");
+        dateDisplay.className = "displayText";
         var tempDisplay = document.createElement("p");
+        tempDisplay.className = "displayText";
         var windDisplay = document.createElement("p");
+        windDisplay.className = "displayText";
         var humDisplay = document.createElement("p");
+        humDisplay.className = "displayText";
+        dateDisplay.textContent = "Date: " + todaysDate;
         tempDisplay.textContent = "Temperature: " + String(dailyArray[0]) + "°F";
         windDisplay.textContent = "Wind speed: " + String(dailyArray[1]) + "MPH";
         humDisplay.textContent = "Humidity: " + String(dailyArray[2]) + "%";
 
-        dailyForecast.append(tempDisplay, windDisplay, humDisplay);
+        dailyForecast.append(dateDisplay, tempDisplay, windDisplay, humDisplay);
 
     });
 
@@ -116,10 +137,12 @@ function coordsFetch(lat, lon){
             console.log(data);
             // loop to get 5-day temperature/wind speed/humidity averages
             for (var i = 0; i < data.list.length; i++){
+                var mainTemp = data.list[i].main.temp
                 if (i >= 0 && i <= 7){
-                    firstdayTemparray.push(data.list[i].main.temp);
+                    firstdayTemparray.push(mainTemp);
                     firstdayWindarray.push(data.list[i].wind.speed);
                     firstdayHumarray.push(data.list[i].main.humidity);
+                    
                 } else if (i >= 8 && i <= 15) {
                     seconddayTemparray.push(data.list[i].main.temp);
                     seconddayWindarray.push(data.list[i].wind.speed);
@@ -137,13 +160,9 @@ function coordsFetch(lat, lon){
                     fifthdayWindarray.push(data.list[i].wind.speed);
                     fifthdayHumarray.push(data.list[i].main.humidity);
                 }
-            }
+            };
 
-            dayOne.innerHTML = '';
-            dayTwo.innerHTML = '';
-            dayThree.innerHTML = '';
-            dayFour.innerHTML = '';
-            dayFive.innerHTML = '';
+            clearDays();
 
             var firstdayDisplay = ["Day One: "];
             var seconddayDisplay = ["Day Two: "];
@@ -151,12 +170,14 @@ function coordsFetch(lat, lon){
             var fourthdayDisplay = ["Day Four: "];
             var fifthdayDisplay = ["Day Five: "];
 
+            dayjs(data.list[1].dt_txt).format('DD/MM');
+
             // pushing 5-day forecast info to display arrays
-            firstdayDisplay.push(arrayAvg(firstdayTemparray), arrayAvg(firstdayWindarray), arrayAvg(firstdayHumarray));
-            seconddayDisplay.push(arrayAvg(seconddayTemparray), arrayAvg(seconddayWindarray), arrayAvg(seconddayHumarray));
-            thirddayDisplay.push(arrayAvg(thirddayTemparray), arrayAvg(thirddayWindarray), arrayAvg(thirddayHumarray));
-            fourthdayDisplay.push(arrayAvg(fourthdayTemparray), arrayAvg(fourthdayWindarray), arrayAvg(thirddayHumarray));
-            fifthdayDisplay.push(arrayAvg(fifthdayTemparray), arrayAvg(fifthdayWindarray), arrayAvg(fifthdayHumarray));
+            firstdayDisplay.push(dayjs(data.list[1].dt_txt).format('MM/DD'), arrayAvg(firstdayTemparray), arrayAvg(firstdayWindarray), arrayAvg(firstdayHumarray));
+            seconddayDisplay.push(dayjs(data.list[9].dt_txt).format('MM/DD'), arrayAvg(seconddayTemparray), arrayAvg(seconddayWindarray), arrayAvg(seconddayHumarray));
+            thirddayDisplay.push(dayjs(data.list[17].dt_txt).format('MM/DD'), arrayAvg(thirddayTemparray), arrayAvg(thirddayWindarray), arrayAvg(thirddayHumarray));
+            fourthdayDisplay.push(dayjs(data.list[25].dt_txt).format('MM/DD'), arrayAvg(fourthdayTemparray), arrayAvg(fourthdayWindarray), arrayAvg(thirddayHumarray));
+            fifthdayDisplay.push(dayjs(data.list[33].dt_txt).format('MM/DD'), arrayAvg(fifthdayTemparray), arrayAvg(fifthdayWindarray), arrayAvg(fifthdayHumarray));
             // figure out how to do the weather condition icons
 
             arrayDisplay(firstdayDisplay, dayOne);
@@ -170,23 +191,25 @@ function coordsFetch(lat, lon){
 
 // displays temperature/wind speed/humidity
 function arrayDisplay(array, daySection){
+    var sectionHead = document.createElement("h2");
+    var datedisplayEl = document.createElement("p");
     var tempdisplayEl = document.createElement("p");
     var winddisplayEl = document.createElement("p");
     var humdisplayEl = document.createElement("p");
-    var sectionHead = document.createElement("h2");
 
     sectionHead.textContent = String(array[0]);
     sectionHead.className = "sectionHead";
-    tempdisplayEl.textContent = "Temperature: " + String(array[1]) + "°F";
+    datedisplayEl.textContent = "Date: " + String(array[1])
+    datedisplayEl.className = "displayText"
+    tempdisplayEl.textContent = "Temperature: " + String(array[2]) + "°F";
     tempdisplayEl.className = "displayText";
-    winddisplayEl.textContent = "Wind speed: " + String(array[2]) + "MPH";
+    winddisplayEl.textContent = "Wind speed: " + String(array[3]) + "MPH";
     winddisplayEl.className = "displayText";
-    humdisplayEl.textContent = "Humidity: " + String(array[3]) + "%";
+    humdisplayEl.textContent = "Humidity: " + String(array[4]) + "%";
     humdisplayEl.className = "displayText";
-
-    daySection.append(sectionHead, tempdisplayEl, winddisplayEl, humdisplayEl);
+    daySection.append(sectionHead, datedisplayEl, tempdisplayEl, winddisplayEl, humdisplayEl);
     return;
-}
+};
 
 // averages array objects and returns an integer
 function arrayAvg(array){
@@ -196,3 +219,8 @@ function arrayAvg(array){
    }
    return Math.floor(initialTotal / array.length);
 };
+
+// imgs inside sections in HTML - X
+// js to set attribute for the src
+// dependent on weather type - get icon code in URL
+// help

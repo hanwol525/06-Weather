@@ -1,11 +1,100 @@
-.tempdisplayEl {
-    color: red;
+:root{
+    --darkblue: rgb(0, 7, 49);
+    --btnblue: rgb(36, 51, 137);
+    --btnhover: rgb(93, 105, 176);
+    --lightgray: rgb(201, 202, 210);
+    --gray: rgb(155, 156, 165);
+    --darkgray: rgb(87, 88, 94);
+}
+
+/* header */
+#header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: flex-end;
+    font-size: 35px;
+    color: var(--gray);
+    min-height: 90px;
+    background-color: var(--darkblue);
+    padding-bottom: 10px;
+    padding-left: 20px;
+    margin: -10px;
+    margin-right: -301px;
+}
+
+/* search bar/submit button */
+#searchbarDiv {
+    background-color: transparent;
+}
+
+#submitBtn {
+    background-color: var(--btnblue);
+    color: var(--lightgray);
+}
+
+/* intro message */
+#introMsg p {
+    color: var(--darkgray);
+    margin-bottom: -200px;
+    padding-top: 50px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* search history */
+#toggleDropdown{
+    margin: 10px;
+    margin-top: 20px;
+    margin-left: 30px;
+    max-width: 300px;
+    font-size: 15px;
+    background-color: var(--btnblue);
+    color: var(--lightgray);
+}
+
+#toggleDropdown:hover, #submitBtn:hover {
+    background-color: var(--btnhover);
+    color: var(--lightgray);
+}
+
+.searchhistoryBtn {
+    display: block;
+    font-size: 15px;
+}
+
+.searchhistoryBtn:hover {
+    color: var(--gray);
+    cursor: pointer;
+}
+
+/* daily forecast */
+#daily-forecast {
+    min-height: 150px;
+}
+
+/* five-day forecast */
+#fivedayForecast{
+    min-height: 170px;
 }
 
 .sectionHead {
+    color: var(--darkgray);
     font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .displayText {
-    font-size: 10px;
+    color: var(--darkgray);
+    font-size: 15px;
+}
+
+/* footer */
+.footer {
+    margin-top: 57px;
+    margin-right: -3px;
+    min-height: 50px;
+    max-width: 1283px;
+    background-color: var(--darkblue);
 }
