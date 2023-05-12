@@ -1,7 +1,7 @@
 # 06-Weather
 
 ## Project Description:
-<a href="https://hanwol525.github.io/06-weather/">Deployed page</a><br>
+<a href="https://hanwol525.github.io/06-Weather/">Deployed page</a><br>
 This is a city weather forecast tracker. Users can input a city and receive the current weather conditions as well as a five-day forecast. Cities are added to a search history that users can use to navigate to previously-searched cities.
 
 ## Overview of Site:

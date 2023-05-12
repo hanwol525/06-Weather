@@ -56,6 +56,7 @@ submitBtn.addEventListener("click", function(){
 });
 
 function clearDays(){
+    fivedayforecastIcon.innerHTML = '';
     dayOne.innerHTML = '';
     dayTwo.innerHTML = '';
     dayThree.innerHTML = '';
@@ -94,6 +95,7 @@ function coordsFetch(lat, lon){
 
     .then((data) => {
         dailyForecast.innerHTML = '';
+        dailyforecastIcon.innerHTML = '';
         var dailyArray = [];
         var todaysDate = dayjs().format('MM/DD');
         dailyArray.push(data.main.temp, data.wind.speed, data.main.humidity);
