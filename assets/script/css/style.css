@@ -7,6 +7,10 @@
     --darkgray: rgb(87, 88, 94);
 }
 
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 /* header */
 #header {
     display: flex;
@@ -20,23 +24,25 @@
     padding-bottom: 10px;
     padding-left: 20px;
     margin: -10px;
-    margin-right: -301px;
+    margin-right: -320px;
 }
 
 /* search bar/submit button */
 #searchbarDiv {
     background-color: transparent;
+    padding-left: 30px;
 }
 
 #submitBtn {
     background-color: var(--btnblue);
+    font-size: 15px;
     color: var(--lightgray);
 }
 
 /* intro message */
 #introMsg p {
     color: var(--darkgray);
-    margin-bottom: -200px;
+    margin-bottom: -300px;
     padding-top: 50px;
     font-size: 20px;
     font-weight: bold;
@@ -45,7 +51,7 @@
 /* search history */
 #toggleDropdown{
     margin: 10px;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: 30px;
     max-width: 300px;
     font-size: 15px;
@@ -94,7 +100,174 @@
 .footer {
     margin-top: 57px;
     margin-right: -3px;
-    min-height: 50px;
     max-width: 1283px;
-    background-color: var(--darkblue);
+}
+
+/* large displays */
+@media screen and (min-width: 1900px) {
+    #header {
+        font-size: 50px;
+        min-height: 150px;
+        margin-right: -350px;
+    }
+
+    #submitBtn {
+        padding-right: 40px;
+    }
+
+    #toggleDropdown {
+        font-size: 17px;
+    }
+
+    #introMsg p {
+        margin-top: 200px;
+        margin-bottom: -300px;
+        font-size: 30px;
+    }
+
+    #toggleDropdown{
+        margin-top: 60px;
+        max-width: 400px;
+    }
+
+    .sectionHead {
+        font-size: 30px;
+    }
+    
+    .displayText {
+        font-size: 24px;
+    }
+}
+
+/* med displays */
+@media screen and (min-width: 1440px) {
+    #header {
+        font-size: 45px;
+        min-height: 110px;
+        padding-left: 40px;
+        margin-right: -335px;
+    }
+    
+    #searchbarDiv {
+        position: relative;
+        top: 10px;
+    }
+
+    #submitBtn {
+        padding-right: 30px;
+    }
+
+    #introMsg p {
+        margin-bottom: -300px;
+        font-size: 24px;
+    }
+
+    #toggleDropdown{
+        margin-top: 40px;
+        margin-left: 50px;
+        max-width: 350px;
+    }
+
+    .sectionHead {
+        font-size: 22px;
+    }
+    
+    .displayText {
+        font-size: 17px;
+    }
+}
+
+/* tablets */
+@media screen and (max-width: 800px) {
+    #header {
+        font-size: 30px;
+        min-height: 70px;
+        padding-left: 20px;
+        margin-right: -335px;
+    }
+
+    #submitBtn, #toggleDropdown {
+        padding-right: 30px;
+        font-size: 14px;
+    }
+
+    #introMsg p {
+        margin-bottom: -300px;
+        font-size: 24px;
+    }
+
+    #toggleDropdown {
+        margin-top: 30px;
+        margin-left: 30px;
+    }
+
+    .searchhistoryBtn {
+        font-size: 14px;
+    }
+
+    .sectionHead {
+        font-size: 18px;
+    }
+    
+    .displayText {
+        font-size: 13px;
+    }
+}
+
+/* smartphones */
+@media screen and (max-width: 450px) {
+    #header {
+        padding-left: 50px;
+        margin-right: auto;
+        font-size: 20px;
+        min-height: 60px;
+    }
+
+    #searchbarDiv {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 12px;
+    }
+
+    #submitBtn, #toggleDropdown {
+        font-size: 12px;
+    }
+
+    /* #introMsg {
+        display: flex;
+        flex-flow: row wrap;
+    } */
+
+    #introMsg p {
+        margin-bottom: -400px;
+        padding: 20px;
+        font-size: 16px;
+    }
+
+    #toggleDropdown {
+        margin-top: 30px;
+        margin-left: 45px;
+    }
+
+    .searchhistoryBtn {
+        font-size: 12px;
+    }
+
+    #daily-forecast-icon {
+        margin-bottom: -30px;
+    }
+
+    #fivedayforecastIcon {
+        margin-top: -30px;
+    }
+
+    .sectionHead {
+        font-size: 16px;
+    }
+    
+    .displayText {
+        font-size: 11px;
+    }
 }

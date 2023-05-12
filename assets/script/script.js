@@ -1,14 +1,3 @@
-// TO DO:
-// current/daily forecase
-// --date (day.js for conversion)
-// --icon representation of weather conditions
-// 5-day forecast with:
-// --date
-// --icon representation of weather conditions
-
-// API KEY: 23116274a5a42433f230b2d7ad947f9a
-
-
 // intro message
 var introMsg = document.getElementById("introMsg");
 
@@ -40,7 +29,9 @@ var fifthdayHumarray = [];
 
 // forecast section display variables
 var dailyForecast = document.getElementById("daily-forecast");
+var dailyforecastIcon = document.getElementById("daily-forecast-icon");
 var fivedayForecast = document.getElementById("fivedayForecast");
+var fivedayforecastIcon = document.getElementById("fivedayforecastIcon");
 var dayOne = document.getElementById("firstday-forecast");
 var dayTwo = document.getElementById("secondday-forecast");
 var dayThree = document.getElementById("thirdday-forecast");
@@ -102,13 +93,16 @@ function coordsFetch(lat, lon){
     })
 
     .then((data) => {
-        console.log(data)
         dailyForecast.innerHTML = '';
-
         var dailyArray = [];
         var todaysDate = dayjs().format('MM/DD');
         dailyArray.push(data.main.temp, data.wind.speed, data.main.humidity);
 
+        var dailyforecastMsg = document.createElement("h2");
+        dailyforecastMsg.className = "sectionHead";
+        dailyforecastMsg.textContent = "Current Weather";
+        dailyforecastIcon.innerHTML = '<img src="https://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png">';
+        dailyforecastIcon.appendChild(dailyforecastMsg);
         var dateDisplay = document.createElement("p");
         dateDisplay.className = "displayText";
         var tempDisplay = document.createElement("p");
@@ -121,7 +115,7 @@ function coordsFetch(lat, lon){
         tempDisplay.textContent = "Temperature: " + String(dailyArray[0]) + "°F";
         windDisplay.textContent = "Wind speed: " + String(dailyArray[1]) + "MPH";
         humDisplay.textContent = "Humidity: " + String(dailyArray[2]) + "%";
-
+        
         dailyForecast.append(dateDisplay, tempDisplay, windDisplay, humDisplay);
 
     });
@@ -171,25 +165,32 @@ function coordsFetch(lat, lon){
             var fourthdayDisplay = ["Day Four: "];
             var fifthdayDisplay = ["Day Five: "];
 
-            dayOne.innerHTML = '<img src="https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png">'
-        
+            dayOne.innerHTML = '<img src="https://openweathermap.org/img/wn/' + data.list[4].weather[0].icon + '@2x.png">'
+            dayTwo.innerHTML = '<img src="https://openweathermap.org/img/wn/' + data.list[11].weather[0].icon + '@2x.png">'
+            dayThree.innerHTML = '<img src="https://openweathermap.org/img/wn/' + data.list[20].weather[0].icon + '@2x.png">'
+            dayFour.innerHTML = '<img src="https://openweathermap.org/img/wn/' + data.list[29].weather[0].icon + '@2x.png">'
+            dayFive.innerHTML = '<img src="https://openweathermap.org/img/wn/' + data.list[34].weather[0].icon + '@2x.png">'
 
             dayjs(data.list[1].dt_txt).format('DD/MM');
 
-            // pushing 5-day forecast info to display arrays
+            // pushes 5-day forecast info to display arrays
             firstdayDisplay.push(dayjs(data.list[1].dt_txt).format('MM/DD'), arrayAvg(firstdayTemparray), arrayAvg(firstdayWindarray), arrayAvg(firstdayHumarray));
             seconddayDisplay.push(dayjs(data.list[9].dt_txt).format('MM/DD'), arrayAvg(seconddayTemparray), arrayAvg(seconddayWindarray), arrayAvg(seconddayHumarray));
             thirddayDisplay.push(dayjs(data.list[17].dt_txt).format('MM/DD'), arrayAvg(thirddayTemparray), arrayAvg(thirddayWindarray), arrayAvg(thirddayHumarray));
             fourthdayDisplay.push(dayjs(data.list[25].dt_txt).format('MM/DD'), arrayAvg(fourthdayTemparray), arrayAvg(fourthdayWindarray), arrayAvg(thirddayHumarray));
             fifthdayDisplay.push(dayjs(data.list[33].dt_txt).format('MM/DD'), arrayAvg(fifthdayTemparray), arrayAvg(fifthdayWindarray), arrayAvg(fifthdayHumarray));
-            // figure out how to do the weather condition icons
-
+            
+            // displays five-day forecast text and arrays in corresponding sections
+            var fivedayMsg = document.createElement("h2");
+            fivedayMsg.className = "sectionHead";
+            fivedayMsg.textContent = "Five-Day Forecast";
+            fivedayforecastIcon.append(fivedayMsg);
             arrayDisplay(firstdayDisplay, dayOne);
             arrayDisplay(seconddayDisplay, dayTwo);
             arrayDisplay(thirddayDisplay, dayThree);
             arrayDisplay(fourthdayDisplay, dayFour);
             arrayDisplay(fifthdayDisplay, dayFive);
-
+            
             console.log(data.list[0].weather[0].icon);
         });
     return;
