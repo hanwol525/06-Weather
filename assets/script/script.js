@@ -85,12 +85,6 @@ function coordsFetch(lat, lon){
     var fivedaycoordsFetchURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=23116274a5a42433f230b2d7ad947f9a&units=imperial';
     var dailycoordsFetchURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=23116274a5a42433f230b2d7ad947f9a&units=imperial';
     
-    var fivedayforecastIcon = document.getElementById("fivedayforecastIcon");
-    fivedayforecastIcon.innerHTML = '';
-    var fivedayMsg = document.createElement("h2");
-    fivedayMsg.className = "sectionHead";
-    fivedayMsg.innerHTML = '';
-    
     // call for daily forecast
     fetch(dailycoordsFetchURL)
     .then((res) => {
@@ -186,15 +180,11 @@ function coordsFetch(lat, lon){
             fifthdayDisplay.push(dayjs(data.list[33].dt_txt).format('MM/DD'), arrayAvg(fifthdayTemparray), arrayAvg(fifthdayWindarray), arrayAvg(fifthdayHumarray));
             
             // displays five-day forecast text and arrays in corresponding sections
-            fivedayMsg.textContent = "Five-Day Forecast";
-            fivedayforecastIcon.append(fivedayMsg);
             arrayDisplay(firstdayDisplay, dayOne);
             arrayDisplay(seconddayDisplay, dayTwo);
             arrayDisplay(thirddayDisplay, dayThree);
             arrayDisplay(fourthdayDisplay, dayFour);
             arrayDisplay(fifthdayDisplay, dayFive);
-            
-            console.log(data.list[0].weather[0].icon);
         });
     return;
 };
