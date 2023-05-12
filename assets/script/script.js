@@ -58,7 +58,6 @@ submitBtn.addEventListener("click", function(){
     lastcityBtn.textContent = lastcityLS.toUpperCase();
     lastcityBtn.className = "searchhistoryBtn"
     searchHistory.appendChild(lastcityBtn);
-    console.log(searchHistory.childNodes[1].innerHTML);
     // triggers weather fetches
     lastcityBtn.addEventListener("click", function(){
         citynameFetch(lastcityLS);
@@ -164,11 +163,16 @@ function coordsFetch(lat, lon){
 
             clearDays();
 
+            console.log('https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png');
+
             var firstdayDisplay = ["Day One: "];
             var seconddayDisplay = ["Day Two: "];
             var thirddayDisplay = ["Day Three: "];
             var fourthdayDisplay = ["Day Four: "];
             var fifthdayDisplay = ["Day Five: "];
+
+            dayOne.innerHTML = '<img src="https://openweathermap.org/img/wn/' + data.list[0].weather[0].icon + '@2x.png">'
+        
 
             dayjs(data.list[1].dt_txt).format('DD/MM');
 
@@ -185,6 +189,8 @@ function coordsFetch(lat, lon){
             arrayDisplay(thirddayDisplay, dayThree);
             arrayDisplay(fourthdayDisplay, dayFour);
             arrayDisplay(fifthdayDisplay, dayFive);
+
+            console.log(data.list[0].weather[0].icon);
         });
     return;
 };
