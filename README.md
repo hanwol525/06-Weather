@@ -1,10 +1,21 @@
-# 06-weather
+# 06-Weather
 
+## Project Description:
+<a href="https://hanwol525.github.io/06-weather/">Deployed page</a><br>
+This is a city weather forecast tracker. Users can input a city and receive the current weather conditions as well as a five-day forecast. Cities are added to a search history that users can use to navigate to previously-searched cities.
 
-## Resources:
+## Overview of Site:
+<img src="images/sitepreview1.jpeg">
+<img src="images/sitepreview2.jpeg">
+
+## Resources/Technology Used:
 <ul>
-    <li> Foundation - CSS fw (starter html template)
-    <li> Node.js, jQuery, Day.js
+    <li> Openweather 5-day forecast API
+    <li> Openweather geocoding API
+    <li> Foundation (CSS Framework)
+    <li> Node.js/jQuery
+    <li> Day.js
+    <li> Vanilla CSS, JavasScript, and HTML
 </ul>
 
 ## Future updates:
