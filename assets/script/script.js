@@ -31,7 +31,6 @@ var fifthdayHumarray = [];
 var dailyForecast = document.getElementById("daily-forecast");
 var dailyforecastIcon = document.getElementById("daily-forecast-icon");
 var fivedayForecast = document.getElementById("fivedayForecast");
-var fivedayforecastIcon = document.getElementById("fivedayforecastIcon");
 var dayOne = document.getElementById("firstday-forecast");
 var dayTwo = document.getElementById("secondday-forecast");
 var dayThree = document.getElementById("thirdday-forecast");
@@ -85,7 +84,13 @@ function coordsFetch(lat, lon){
     // urls for api calls
     var fivedaycoordsFetchURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=23116274a5a42433f230b2d7ad947f9a&units=imperial';
     var dailycoordsFetchURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=23116274a5a42433f230b2d7ad947f9a&units=imperial';
-
+    
+    var fivedayforecastIcon = document.getElementById("fivedayforecastIcon");
+    fivedayforecastIcon.innerHTML = '';
+    var fivedayMsg = document.createElement("h2");
+    fivedayMsg.className = "sectionHead";
+    fivedayMsg.innerHTML = '';
+    
     // call for daily forecast
     fetch(dailycoordsFetchURL)
     .then((res) => {
@@ -128,7 +133,6 @@ function coordsFetch(lat, lon){
         }) 
       
         .then((data) => {
-            fivedayforecastIcon.innerHTML = '';
             // loop to get 5-day temperature/wind speed/humidity averages
             for (var i = 0; i < data.list.length; i++){
                 var mainTemp = data.list[i].main.temp
@@ -182,8 +186,6 @@ function coordsFetch(lat, lon){
             fifthdayDisplay.push(dayjs(data.list[33].dt_txt).format('MM/DD'), arrayAvg(fifthdayTemparray), arrayAvg(fifthdayWindarray), arrayAvg(fifthdayHumarray));
             
             // displays five-day forecast text and arrays in corresponding sections
-            var fivedayMsg = document.createElement("h2");
-            fivedayMsg.className = "sectionHead";
             fivedayMsg.textContent = "Five-Day Forecast";
             fivedayforecastIcon.append(fivedayMsg);
             arrayDisplay(firstdayDisplay, dayOne);
