@@ -56,7 +56,6 @@ submitBtn.addEventListener("click", function(){
 });
 
 function clearDays(){
-    fivedayforecastIcon.innerHTML = '';
     dayOne.innerHTML = '';
     dayTwo.innerHTML = '';
     dayThree.innerHTML = '';
@@ -129,7 +128,7 @@ function coordsFetch(lat, lon){
         }) 
       
         .then((data) => {
-            console.log(data);
+            fivedayforecastIcon.innerHTML = '';
             // loop to get 5-day temperature/wind speed/humidity averages
             for (var i = 0; i < data.list.length; i++){
                 var mainTemp = data.list[i].main.temp
