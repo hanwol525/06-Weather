@@ -5,8 +5,8 @@
 This is a city weather forecast tracker. Users can input a city and receive the current weather conditions as well as a five-day forecast. Cities are added to a search history that users can use to navigate to previously-searched cities.
 
 ## Overview of Site:
-<img src="images/sitepreview1.jpeg">
-<img src="images/sitepreview2.jpeg">
+<img src="assets/script/images/sitepreview1.jpeg">
+<img src="assets/script/images/sitepreview2.jpeg">
 
 ## Resources/Technology Used:
 <ul>

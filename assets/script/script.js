@@ -226,8 +226,3 @@ function arrayAvg(array){
    }
    return Math.floor(initialTotal / array.length);
 };
-
-// imgs inside sections in HTML - X
-// js to set attribute for the src
-// dependent on weather type - get icon code in URL
-// help
